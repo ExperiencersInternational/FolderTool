@@ -1,4 +1,5 @@
-# FolderTool
+![FolderTool](https://user-images.githubusercontent.com/56035537/125211654-df5ca400-e29f-11eb-947c-e18da525b7be.png)
+
 A plugin that creates and ungroups folders.
 
 ## Quick installation setup
