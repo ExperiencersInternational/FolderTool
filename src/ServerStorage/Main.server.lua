@@ -1,3 +1,13 @@
+--[[
+	FolderTool
+
+	A plugin to group selected items to a folder and ungroup them.
+
+	Created by GamersInternational and LucasTutoriaisSaimo for Rii-built Studios
+
+	(C) 2021
+]]
+
 local SelectionService = game:GetService("Selection")
 local ChangeHistoryService = game:GetService("ChangeHistoryService")
 
@@ -6,13 +16,13 @@ local Toolbar = plugin:CreateToolbar("FolderTool")
 local Button_GroupIntoFolder = Toolbar:CreateButton(
 	"Group selected items into a folder",
 	"This button groups all items that are currently selected into a folder.",
-	"rbxassetid://7079868279"
+	"rbxassetid://7081112821"
 )
 
 local Button_UngroupFromFolder = Toolbar:CreateButton(
 	"Ungroup items in selected folder",
 	"This button ungroups all items that are in the selected folder.",
-	"rbxassetid://4458901886"
+	"rbxassetid://7081124672"
 )
 
 
