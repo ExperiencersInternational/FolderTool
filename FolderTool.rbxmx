@@ -1,0 +1,123 @@
+<roblox xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.roblox.com/roblox.xsd" version="4">
+	<External>null</External>
+	<External>nil</External>
+	<Item class="Folder" referent="RBX177A46DE07E0411CB9805CB28215D1A5">
+		<Properties>
+			<BinaryString name="AttributesSerialize"></BinaryString>
+			<string name="Name">FolderTool</string>
+			<int64 name="SourceAssetId">-1</int64>
+			<BinaryString name="Tags"></BinaryString>
+		</Properties>
+		<Item class="Script" referent="RBXB3B5DD945A2B42DB8EDD79D2089F0E9E">
+			<Properties>
+				<BinaryString name="AttributesSerialize"></BinaryString>
+				<bool name="Disabled">false</bool>
+				<Content name="LinkedSource"><null></null></Content>
+				<string name="Name">Script</string>
+				<string name="ScriptGuid">{DE43727B-52F8-406B-BE96-09A45B007414}</string>
+				<ProtectedString name="Source"><![CDATA[--[[
+FolderTool, the plugin that lets you easily group selected parts into a folder and ungroup them
+
+Early Alpha
+]]
+-- Services
+local Selection = game:GetService("Selection")
+local ChangeHistoryService = game:GetService("ChangeHistoryService")
+local selectedObjects = Selection:Get()
+
+-- Plugin variables
+local toolbar = plugin:CreateToolbar("FolderTool")
+
+local groupintofolder = toolbar:CreateButton("Group selected items into a folder", "This button groups all items that are currently selected into a folder.", "rbxassetid://7079868279")
+local ungroupfromfolder = toolbar:CreateButton("Ungroup items in selected folder", "This button ungroups all items that are in the selected folder.", "rbxassetid://4458901886")
+
+groupintofolder.Click:Connect(function()
+	if #selectedObjects == 0 then
+		print("No items are selected for FolderTool to group")
+	else
+		local parent = selectedObjects[1].Parent
+		local folder = Instance.new("Folder")
+		folder.Name = "NewFolder"
+		folder.Parent = parent
+		print(selectedObjects)
+		for _, item in ipairs(selectedObjects) do
+			item.Parent = folder
+		end
+		ChangeHistoryService:SetWaypoint("Grouped selected items into a folder")
+		print("FolderTool successfully grouped the selected items into a folder")
+	end
+end)
+
+ungroupfromfolder.Click:Connect(function()
+	if #selectedObjects == 0 then
+		print("Select a folder to ungroup")
+	elseif #selectedObjects == 1 then do
+			local desc = selectedObjects[1]:GetDescendants()
+			for _, item in ipairs(desc) do
+				item.Parent = Selection.Parent
+			end
+			selectedObjects[1]:Destroy()
+			print("Successfully ungrouped all items inside folder.")
+			ChangeHistoryService:SetWaypoint("Ungrouped items inside folder")
+	end
+	elseif #selectedObjects > 2 then do
+	print("You can only ungroup 1 folder at a time!")
+		end
+		end
+end)]]></ProtectedString>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+			</Properties>
+		</Item>
+		<Item class="Model" referent="RBX53F691804D4048F7AF93E614C3576B1A">
+			<Properties>
+				<BinaryString name="AttributesSerialize"><![CDATA[AwAAAAUAAABCdWlsZAICAAAAMTEOAAAAUmVsZWFzZUNoYW5uZWwCBQAAAEFscGhhBwAAAFZl
+cnNpb24CAwAAADAuMQ==]]></BinaryString>
+				<token name="LevelOfDetail">0</token>
+				<CoordinateFrame name="ModelInPrimary">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<CoordinateFrame name="ModelMeshCFrame">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+					<R00>1</R00>
+					<R01>0</R01>
+					<R02>0</R02>
+					<R10>0</R10>
+					<R11>1</R11>
+					<R12>0</R12>
+					<R20>0</R20>
+					<R21>0</R21>
+					<R22>1</R22>
+				</CoordinateFrame>
+				<SharedString name="ModelMeshData">yuZpQdnvvUBOTYh1jqZ2cA==</SharedString>
+				<Vector3 name="ModelMeshSize">
+					<X>0</X>
+					<Y>0</Y>
+					<Z>0</Z>
+				</Vector3>
+				<string name="Name">PluginInfo</string>
+				<bool name="NeedsPivotMigration">false</bool>
+				<Ref name="PrimaryPart">null</Ref>
+				<int64 name="SourceAssetId">-1</int64>
+				<BinaryString name="Tags"></BinaryString>
+				<OptionalCoordinateFrame name="WorldPivotData"></OptionalCoordinateFrame>
+			</Properties>
+		</Item>
+	</Item>
+	<SharedStrings>
+		<SharedString md5="yuZpQdnvvUBOTYh1jqZ2cA=="></SharedString>
+	</SharedStrings>
+</roblox>
