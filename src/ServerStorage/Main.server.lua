@@ -21,6 +21,13 @@ local Button_UngroupFromFolder = Toolbar:CreateButton(
 	"rbxassetid://7081124672"
 )
 
+local Button_ModelToFolder = Toolbar:CreateButton(
+    "Convert a selected model into a folder",
+    "This button coverts a model into a folder. Some properties will be discarded.",
+    "rbxassetid://7081112821" --TODO: image
+)
+
+
 
 Button_GroupIntoFolder.Click:Connect(function()
 	local selectedObjects = SelectionService:Get()
@@ -74,4 +81,35 @@ Button_UngroupFromFolder.Click:Connect(function()
 	end
 
 	ChangeHistoryService:SetWaypoint("FolderTool: Un-grouped items from a folder")
+end)
+
+Button_ModelToFolder.Click:Connect(function() -- thanks Dandcx
+    local selectedObjects = SelectionService:Get()
+
+	if #selectedObjects == 0 then
+		warn("FolderTool | You need to select a folder first!")
+		return;
+	end
+    local toSelect = {}
+	for _, child in ipairs(selectedObjects) do
+		if not child:IsA("Model") then
+			warn("FolderTool | You can only convert models to folders (not vice versa).")
+			return
+		end
+		--\\ Validation, just making sure every children is a model.
+
+        for _, model in ipairs(selectedObjects) do
+            local modChildren = model:GetChildren()
+            local newFolder = Instance.new("Folder")
+            newFolder.Name = model.Name
+            newFolder.Parent = model.Parent
+            for _, c in ipairs(modChildren) do
+                c.Parent = newFolder
+            end
+            table.insert(toSelect, newFolder)
+            model.Parent = nil
+        end
+	end
+    SelectionService:Set(toSelect)
+    ChangeHistoryService:SetWaypoint("FolderTool: Model to folder")
 end)
