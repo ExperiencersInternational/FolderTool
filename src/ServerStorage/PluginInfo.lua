@@ -1,6 +1,6 @@
 return {
-	Version = "0.2.1",
+	Version = "0.3",
 	BuildChannel = "Alpha",
-	Build = 13,
-	CompiledDate = "17/7/2021 @ 21:40 BST"
+	Build = 17,
+	CompiledDate = "17/7/2021 @ 22:32 BST"
 }

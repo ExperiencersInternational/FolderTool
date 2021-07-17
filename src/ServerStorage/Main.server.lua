@@ -22,6 +22,12 @@ local Button_UngroupFromFolder = Toolbar:CreateButton(
 	"rbxassetid://7081124672"
 )
 
+local Button_ClassConversion = Toolbar:CreateButton(
+	"Model > Folder",
+	"This button converts the class of a selected model",
+	"rbxassetid://7111860061"
+)
+
 
 Button_GroupIntoFolder.Click:Connect(function()
 	local selectedObjects = SelectionService:Get()
@@ -86,4 +92,29 @@ Button_UngroupFromFolder.Click:Connect(function()
 	
 	SelectionService:Set(objectsToSelect)
 	ChangeHistoryService:SetWaypoint("FolderTool: Un-grouped items from a folder")
+end)
+
+Button_ClassConversion.Click:Connect(function()
+	local selectedObjects = SelectionService:Get()
+	if #selectedObjects == 0 then
+		warn("You need to select a model first!")
+		return
+	elseif #selectedObjects > 1 then
+		warn("You have too many files selected, only one file can be selected at a time!")
+		return
+	end
+	if selectedObjects[1].ClassName == "Model" then
+		local folder = Instance.new("Folder")
+		folder.Name = selectedObjects[1].Name
+		folder.Parent = selectedObjects[1].Parent
+		local desc = selectedObjects[1]:GetDescendants()
+		for index, descendant in pairs(desc) do
+			descendant.Parent = folder
+		end
+		selectedObjects[1].Parent = nil
+		ChangeHistoryService:SetWaypoint("FolderTool: Changed the class of a model to a folder")
+		SelectionService:Set({folder})
+	else
+		warn("The item selected is not a model.")
+	end
 end)
