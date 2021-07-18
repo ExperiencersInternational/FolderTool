@@ -2,7 +2,6 @@
 	FolderTool
 	A plugin to group selected items to a folder and ungroup them.
 	Created by GamersInternational and LucasTutoriaisSaimo for Rii-built Studios
-	(C) 2021
 ]]
 
 local SelectionService = game:GetService("Selection")
