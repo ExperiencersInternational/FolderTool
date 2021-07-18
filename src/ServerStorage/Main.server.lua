@@ -11,19 +11,19 @@ local ChangeHistoryService = game:GetService("ChangeHistoryService")
 local Toolbar = plugin:CreateToolbar("FolderTool")
 
 local Button_GroupIntoFolder = Toolbar:CreateButton(
-	"Group selected items into a folder",
+	"Group",
 	"This button groups all items that are currently selected into a folder.",
 	"rbxassetid://7081112821"
 )
 
 local Button_UngroupFromFolder = Toolbar:CreateButton(
-	"Ungroup items in selected folder",
+	"Ungroup",
 	"This button ungroups all items that are in the selected folder.",
 	"rbxassetid://7081124672"
 )
 
 local Button_ClassConversion = Toolbar:CreateButton(
-	"Model > Folder",
+	"Convert",
 	"This button converts the class of a selected model",
 	"rbxassetid://7111860061"
 )
