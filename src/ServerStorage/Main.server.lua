@@ -2,7 +2,7 @@
 	FolderTool
 	A plugin to group selected items to a folder and ungroup them.
 	Created by GamersInternational and LucasTutoriaisSaimo for Rii-built Studios
-	(C) 2021
+	(C) 2022
 ]]
 
 local SelectionService = game:GetService("Selection")
@@ -28,9 +28,26 @@ local Button_ClassConversion = Toolbar:CreateButton(
 	"rbxassetid://7111860061"
 )
 
+local function checkforupdates()
+	local pluginversionmodule = require(8741310303)
+	local ver = require(script.Parent.PluginInfo)
+	pluginversionmodule.Parent = game.Workspace
+	task.wait(2)
+
+	if pluginversionmodule.foldertool == ver.ver then
+		return
+	else
+		print("An update is available for FolderTool. Install it by going into Plugins > Manage Plugins and click the update button next to FolderTool.")
+	end
+	ChangeHistoryService:SetWaypoint("FolderTool Update Check")
+end
+
+checkforupdates()
+
 
 Button_GroupIntoFolder.Click:Connect(function()
 	local selectedObjects = SelectionService:Get()
+	ChangeHistoryService:SetWaypoint("FolderTool: Pre grouping items into a folder")
 
 	if #selectedObjects == 0 then
 		warn("You must have at least one Instance to group.")
@@ -79,6 +96,7 @@ Button_UngroupFromFolder.Click:Connect(function()
 	local objectsToSelect = {}
 
 	for _, folder in ipairs(selectedObjects) do
+		ChangeHistoryService:SetWaypoint("FolderTool: Pre-ungrouping items from a folder")
 		for _, child in ipairs(folder:GetChildren()) do
 			child.Parent = folder.Parent
 			table.insert(objectsToSelect, child)
@@ -96,25 +114,23 @@ end)
 
 Button_ClassConversion.Click:Connect(function()
 	local selectedObjects = SelectionService:Get()
-	if #selectedObjects == 0 then
-		warn("You need to select a model first!")
-		return
-	elseif #selectedObjects > 1 then
-		warn("You have too many files selected, only one file can be selected at a time!")
-		return
-	end
-	if selectedObjects[1].ClassName == "Model" then
-		local folder = Instance.new("Folder")
-		folder.Name = selectedObjects[1].Name
-		folder.Parent = selectedObjects[1].Parent
-		local desc = selectedObjects[1]:GetDescendants()
-		for index, descendant in pairs(desc) do
-			descendant.Parent = folder
+	ChangeHistoryService:SetWaypoint("FolderTool: Pre class conversion")
+	for _, object in ipairs(selectedObjects) do
+		if object.ClassName ~= "Model" then
+		  continue
 		end
-		selectedObjects[1].Parent = nil
-		ChangeHistoryService:SetWaypoint("FolderTool: Changed the class of a model to a folder")
-		SelectionService:Set({folder})
-	else
-		warn("The item selected is not a model.")
-	end
+	  
+		local folder = Instance.new("Folder")
+		folder.Name = object.Name
+	  
+		for _, child in ipairs(object:GetChildren()) do
+		  child.Parent = folder
+		end
+	  
+		folder.Parent = object.Parent
+		object:Destroy()
+	  end
+	  
+	  -- set history waypoint
+	  ChangeHistoryService:SetWaypoint("FolderTool: Completed class conversion")
 end)
