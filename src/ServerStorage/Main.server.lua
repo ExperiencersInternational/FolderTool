@@ -1,7 +1,7 @@
 --[[
 	FolderTool
 	A plugin to group selected items to a folder and ungroup them.
-	Created by GamersInternational and LucasTutoriaisSaimo for Rii-built Studios
+	Created by GamersInternational and LucasMZ_RBX
 	(C) 2022
 ]]
 
@@ -13,37 +13,20 @@ local Toolbar = plugin:CreateToolbar("FolderTool")
 local Button_GroupIntoFolder = Toolbar:CreateButton(
 	"Group",
 	"This button groups all items that are currently selected into a folder.",
-	"rbxassetid://7081112821"
+	"rbxassetid://10627260996"
 )
 
 local Button_UngroupFromFolder = Toolbar:CreateButton(
 	"Ungroup",
 	"This button ungroups all items that are in the selected folder.",
-	"rbxassetid://7081124672"
+	"rbxassetid://10627263013"
 )
 
 local Button_ClassConversion = Toolbar:CreateButton(
 	"Convert",
 	"This button converts the class of a selected model",
-	"rbxassetid://7111860061"
+	"rbxassetid://10627262177"
 )
-
-local function checkforupdates()
-	local pluginversionmodule = require(8741310303)
-	local ver = require(script.Parent.PluginInfo)
-	pluginversionmodule.Parent = game.Workspace
-	task.wait(2)
-
-	if pluginversionmodule.foldertool == ver.ver then
-		return
-	else
-		print("An update is available for FolderTool. Install it by going into Plugins > Manage Plugins and click the update button next to FolderTool.")
-	end
-	ChangeHistoryService:SetWaypoint("FolderTool Update Check")
-end
-
-checkforupdates()
-
 
 Button_GroupIntoFolder.Click:Connect(function()
 	local selectedObjects = SelectionService:Get()
